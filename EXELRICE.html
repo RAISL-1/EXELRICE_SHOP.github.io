@@ -1,0 +1,2098 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head link rel="icon" href="favicon.ico" type=""C:\Users\User\Downloads\6014592525840091977.jpg"">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EXELRICE - Гриф Сервер</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #dc2626;
+            --secondary-color: #b91c1c;
+            --accent-color: #ef4444;
+            --dark-bg: #111827;
+            --darker-bg: #0f172a;
+            --light-bg: #1e293b;
+            --card-bg: #1f2937;
+            --text-dark: #f3f4f6;
+            --text-light: #ffffff;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --border-radius: 12px;
+            --transition: all 0.3s ease;
+            --shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            --shadow-dark: 0 12px 30px rgba(0, 0, 0, 0.4);
+            --gradient-primary: linear-gradient(135deg, #dc2626 0%, #b91c1c 50%, #991b1b 100%);
+            --gradient-secondary: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--darker-bg);
+            color: var(--text-dark);
+            line-height: 1.6;
+            padding-top: 80px;
+            min-height: 100vh;
+            overflow-x: hidden;
+            transition: var(--transition);
+            opacity: 0;
+            animation: fadeIn 0.8s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        /* Анимации */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.03);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-8px);
+            }
+        }
+
+        @keyframes glow {
+            0%, 100% {
+                box-shadow: 0 0 15px rgba(220, 38, 38, 0.4);
+            }
+            50% {
+                box-shadow: 0 0 30px rgba(220, 38, 38, 0.7);
+            }
+        }
+
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .animate-on-scroll.animated {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Улучшенная шапка */
+        .top-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(30, 41, 59, 0.95);
+            backdrop-filter: blur(12px);
+            padding: 12px 4%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 25px rgba(0, 0, 0, 0.3);
+            z-index: 2000;
+            transition: var(--transition);
+            border-bottom: 2px solid rgba(220, 38, 38, 0.3);
+        }
+
+        .top-nav.scrolled {
+            padding: 8px 4%;
+            background: rgba(30, 41, 59, 0.98);
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .server-photo {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 2px solid var(--primary-color);
+            box-shadow: 0 4px 15px rgba(220, 38, 38, 0.3);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .server-photo:hover {
+            transform: scale(1.05) rotate(3deg);
+            box-shadow: 0 6px 20px rgba(220, 38, 38, 0.5);
+        }
+
+        .server-photo-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            background: linear-gradient(135deg, #dc2626, #b91c1c);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.8rem;
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-main {
+            font-size: 1.8rem;
+            font-weight: 900;
+            background: linear-gradient(to right, #ef4444, #dc2626, #b91c1c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .logo-sub {
+            font-size: 0.85rem;
+            color: #94a3b8;
+            font-weight: 500;
+            letter-spacing: 1.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: #cbd5e1;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            padding: 10px 18px;
+            border-radius: 8px;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-primary);
+            transition: left 0.4s ease;
+            z-index: -1;
+            border-radius: 8px;
+        }
+
+        .nav-link:hover::before {
+            left: 0;
+        }
+
+        .nav-link:hover {
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .nav-link i {
+            margin-right: 6px;
+            font-size: 1rem;
+        }
+
+        .nav-btn {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 10px 24px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .nav-btn:hover::after {
+            left: 100%;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(220, 38, 38, 0.6);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 1.6rem;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 8px;
+            transition: var(--transition);
+        }
+
+        .mobile-menu-btn:hover {
+            background: rgba(220, 38, 38, 0.1);
+        }
+
+        /* Улучшенная герой-секция */
+        .hero {
+            position: relative;
+            padding: 100px 4% 140px;
+            margin-bottom: 40px;
+            overflow: hidden;
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            color: white;
+            clip-path: polygon(0 0, 100% 0, 100% 90%, 50% 100%, 0 90%);
+            animation: fadeInUp 0.9s ease;
+            border-bottom: 3px solid var(--primary-color);
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.1;
+            z-index: 0;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(220, 38, 38, 0.4) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(185, 28, 28, 0.4) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(153, 27, 27, 0.4) 0%, transparent 50%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .hero-title {
+            font-size: 3.8rem;
+            font-weight: 900;
+            margin-bottom: 15px;
+            background: linear-gradient(to right, #f87171, #ef4444, #dc2626);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.1;
+            animation: fadeInUp 0.8s ease 0.2s both;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-subtitle {
+            font-size: 1.8rem;
+            color: #e2e8f0;
+            margin-bottom: 25px;
+            font-weight: 600;
+            animation: fadeInUp 0.8s ease 0.3s both;
+        }
+
+        .hero-description {
+            font-size: 1.3rem;
+            color: #cbd5e1;
+            max-width: 800px;
+            margin: 0 auto 40px;
+            line-height: 1.7;
+            animation: fadeInUp 0.8s ease 0.4s both;
+        }
+
+        .server-info {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 35px;
+            animation: fadeInUp 0.8s ease 0.5s both;
+        }
+
+        .version-badge {
+            background: rgba(239, 68, 68, 0.2);
+            color: #f87171;
+            padding: 12px 28px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            border: 2px solid rgba(239, 68, 68, 0.4);
+            backdrop-filter: blur(8px);
+            transition: var(--transition);
+        }
+
+        .version-badge:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(239, 68, 68, 0.3);
+        }
+
+        .server-address {
+            background: rgba(34, 197, 94, 0.2);
+            color: #34d399;
+            padding: 12px 28px;
+            border-radius: 8px;
+            font-weight: 800;
+            font-size: 1.3rem;
+            border: 2px solid rgba(34, 197, 94, 0.4);
+            font-family: monospace;
+            backdrop-filter: blur(8px);
+            transition: var(--transition);
+            animation: glow 2s infinite;
+        }
+
+        .server-address:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(34, 197, 94, 0.4);
+        }
+
+        /* Компактная панель настроек 300x450 */
+        .settings-btn {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            width: 56px;
+            height: 56px;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.6rem;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(220, 38, 38, 0.5);
+            z-index: 999;
+            transition: var(--transition);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .settings-btn:hover {
+            transform: scale(1.1) rotate(90deg);
+            box-shadow: 0 12px 35px rgba(220, 38, 38, 0.7);
+        }
+
+        .settings-panel {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            height: 450px;
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 25px;
+            box-shadow: var(--shadow-dark);
+            z-index: 998;
+            display: none;
+            border: 2px solid var(--primary-color);
+            overflow-y: auto;
+        }
+
+        .settings-panel.active {
+            display: block;
+            animation: fadeInUp 0.4s ease;
+        }
+
+        .settings-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #374151;
+        }
+
+        .settings-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .close-settings {
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            color: #94a3b8;
+            cursor: pointer;
+            transition: var(--transition);
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .close-settings:hover {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger-color);
+            transform: rotate(90deg);
+        }
+
+        .settings-group {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #374151;
+        }
+
+        .group-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .group-title i {
+            color: var(--primary-color);
+        }
+
+        .theme-options, .color-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .theme-option, .color-option {
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 2px solid #374151;
+            background: #374151;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .theme-option.active, .color-option.active {
+            border-color: var(--primary-color);
+            background: rgba(220, 38, 38, 0.15);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(220, 38, 38, 0.2);
+        }
+
+        .theme-option:hover, .color-option:hover {
+            transform: translateY(-4px);
+        }
+
+        .color-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .color-preview {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: 2px solid #4b5563;
+        }
+
+        .red .color-preview { background: linear-gradient(135deg, #dc2626, #b91c1c); }
+        .crimson .color-preview { background: linear-gradient(135deg, #991b1b, #7f1d1d); }
+        .orange .color-preview { background: linear-gradient(135deg, #f97316, #ea580c); }
+        .purple .color-preview { background: linear-gradient(135deg, #8b5cf6, #7c3aed); }
+
+        .font-options {
+            display: flex;
+            gap: 8px;
+        }
+
+        .font-option {
+            flex: 1;
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 2px solid #374151;
+            background: #374151;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .font-option.active {
+            border-color: var(--primary-color);
+            background: rgba(220, 38, 38, 0.15);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(220, 38, 38, 0.2);
+        }
+
+        .font-option:hover {
+            transform: translateY(-4px);
+        }
+
+        .font-small { font-size: 0.9em; }
+        .font-medium { font-size: 1em; }
+        .font-large { font-size: 1.1em; }
+
+        .reset-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, var(--danger-color), #b91c1c);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 15px;
+            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+        }
+
+        .reset-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(239, 68, 68, 0.5);
+        }
+
+        /* Основной контейнер */
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Секции */
+        .section {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 50px 35px;
+            margin-bottom: 40px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: 1px solid #374151;
+        }
+
+        .section:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+            border-color: var(--primary-color);
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 15px;
+            background: linear-gradient(to right, #f87171, #ef4444);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 4px;
+            background: var(--gradient-primary);
+            border-radius: 4px;
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: #cbd5e1;
+            text-align: center;
+            margin-bottom: 40px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Секция "Почему мы?" */
+        .why-us-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .why-us-card {
+            background: #374151;
+            border-radius: var(--border-radius);
+            padding: 35px 25px;
+            border: 1px solid #4b5563;
+            text-align: center;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .why-us-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--gradient-primary);
+        }
+
+        .why-us-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            border-color: var(--primary-color);
+        }
+
+        .why-us-icon {
+            font-size: 3.5rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .why-us-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 15px;
+        }
+
+        .why-us-text {
+            color: #cbd5e1;
+            line-height: 1.6;
+        }
+
+        /* Секция покупки валюты */
+        .currency-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 1100px) {
+            .currency-container {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+
+        .currency-box {
+            padding: 35px;
+            border-radius: var(--border-radius);
+            background: #374151;
+            border: 1px solid #4b5563;
+            transition: var(--transition);
+        }
+
+        .currency-box:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+            border-color: var(--primary-color);
+        }
+
+        .currency-amount {
+            font-size: 2.8rem;
+            font-weight: 900;
+            color: var(--primary-color);
+            margin-bottom: 35px;
+            text-align: center;
+        }
+
+        .slider-container {
+            margin: 30px 0;
+        }
+
+        .slider-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .slider-label {
+            font-weight: 700;
+            color: var(--text-dark);
+            font-size: 1.2rem;
+        }
+
+        .slider-value {
+            font-weight: 900;
+            color: var(--primary-color);
+            font-size: 1.5rem;
+        }
+
+        .slider {
+            width: 100%;
+            height: 14px;
+            border-radius: 10px;
+            background: #4b5563;
+            outline: none;
+            -webkit-appearance: none;
+            overflow: hidden;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--gradient-primary);
+            cursor: pointer;
+            border: 4px solid #374151;
+            box-shadow: 0 4px 15px rgba(220, 38, 38, 0.7);
+        }
+
+        .slider-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 12px;
+            color: #94a3b8;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .price-display {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 40px 0;
+            padding: 30px;
+            background: #374151;
+            border-radius: var(--border-radius);
+            border: 1px solid #4b5563;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .price-display::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--gradient-primary);
+        }
+
+        .price-item {
+            text-align: center;
+            flex: 1;
+            position: relative;
+            z-index: 1;
+        }
+
+        .price-label {
+            font-size: 1.2rem;
+            color: #cbd5e1;
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        .price-amount {
+            font-size: 2.8rem;
+            font-weight: 900;
+        }
+
+        .price-give {
+            color: var(--primary-color);
+        }
+
+        .price-get {
+            color: var(--success-color);
+        }
+
+        .arrow {
+            font-size: 3rem;
+            color: #94a3b8;
+            padding: 0 25px;
+        }
+
+        .buy-btn {
+            display: block;
+            width: 100%;
+            padding: 20px;
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 1.5rem;
+            font-weight: 900;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 20px;
+            box-shadow: 0 8px 25px rgba(220, 38, 38, 0.5);
+            position: relative;
+            overflow: hidden;
+            letter-spacing: 0.5px;
+        }
+
+        .buy-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .buy-btn:hover::before {
+            left: 100%;
+        }
+
+        .buy-btn:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(220, 38, 38, 0.7);
+            animation: pulse 0.4s ease;
+        }
+
+        .agreement {
+            text-align: center;
+            color: #94a3b8;
+            font-size: 0.95rem;
+            margin-top: 25px;
+            line-height: 1.6;
+        }
+
+        /* Секции доната */
+        .donat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .donat-card {
+            background: #374151;
+            border-radius: var(--border-radius);
+            padding: 35px 25px;
+            border: 1px solid #4b5563;
+            text-align: center;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .donat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: var(--gradient-primary);
+        }
+
+        .donat-card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            border-color: var(--primary-color);
+        }
+
+        .discount-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--gradient-secondary);
+            color: white;
+            padding: 8px 18px;
+            border-radius: 6px;
+            font-weight: 900;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+            transform: rotate(5deg);
+        }
+
+        .donat-title {
+            font-size: 2.2rem;
+            font-weight: 900;
+            color: var(--text-dark);
+            margin-bottom: 25px;
+            background: linear-gradient(to right, #f87171, #ef4444);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .price-old {
+            font-size: 1.6rem;
+            color: #94a3b8;
+            text-decoration: line-through;
+            margin-bottom: 8px;
+        }
+
+        .price-new {
+            font-size: 3.2rem;
+            font-weight: 900;
+            color: var(--success-color);
+            margin: 15px 0;
+            text-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
+
+        .donat-features {
+            list-style: none;
+            margin: 25px 0;
+            text-align: left;
+        }
+
+        .donat-features li {
+            padding: 10px 0;
+            border-bottom: 1px solid #4b5563;
+            color: #cbd5e1;
+            display: flex;
+            align-items: center;
+            font-size: 0.95rem;
+        }
+
+        .donat-features li i {
+            color: var(--success-color);
+            margin-right: 12px;
+            font-size: 1rem;
+        }
+
+        .donat-btn {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.3rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 20px;
+            box-shadow: 0 6px 20px rgba(220, 38, 38, 0.4);
+        }
+
+        .donat-btn:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(220, 38, 38, 0.6);
+        }
+
+        /* Футер */
+        .footer {
+            text-align: center;
+            padding: 60px 20px;
+            color: #94a3b8;
+            border-top: 1px solid #374151;
+            margin-top: 70px;
+            background: #1e293b;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-bottom: 35px;
+            flex-wrap: wrap;
+        }
+
+        .footer-link {
+            color: #94a3b8;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: var(--transition);
+            padding: 8px 16px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-link:hover {
+            color: var(--primary-color);
+            background: rgba(220, 38, 38, 0.1);
+            transform: translateY(-4px);
+        }
+
+        .telegram-link {
+            color: #0088cc !important;
+        }
+
+        .telegram-link:hover {
+            background: rgba(0, 136, 204, 0.1) !important;
+        }
+
+        .copyright {
+            font-size: 0.95rem;
+            margin-top: 20px;
+            line-height: 1.6;
+        }
+
+        /* Модальные окна */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            z-index: 3000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            width: 100%;
+            max-width: 800px;
+            max-height: 85vh;
+            overflow-y: auto;
+            padding: 40px;
+            position: relative;
+            box-shadow: 0 25px 70px rgba(220, 38, 38, 0.2);
+            border: 2px solid var(--primary-color);
+            animation: fadeInUp 0.5s ease;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 2.2rem;
+            color: #94a3b8;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: var(--transition);
+            background: rgba(148, 163, 184, 0.1);
+        }
+
+        .close-modal:hover {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--danger-color);
+            transform: rotate(90deg);
+        }
+
+        .modal-title {
+            font-size: 2.8rem;
+            font-weight: 900;
+            color: var(--text-dark);
+            margin-bottom: 30px;
+            text-align: center;
+            background: linear-gradient(to right, #f87171, #ef4444);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Правила в модальном окне */
+        .rules-section {
+            margin-bottom: 30px;
+        }
+
+        .rules-section h3 {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #374151;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .rules-list {
+            list-style: none;
+        }
+
+        .rules-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid #374151;
+            color: #cbd5e1;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .rules-list li i {
+            color: var(--primary-color);
+            margin-right: 12px;
+            font-size: 1.1rem;
+            margin-top: 3px;
+        }
+
+        .rules-warning {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(185, 28, 28, 0.1));
+            border-radius: var(--border-radius);
+            padding: 25px;
+            border-left: 5px solid var(--danger-color);
+            margin-top: 40px;
+        }
+
+        .rules-warning h4 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--danger-color);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .rules-warning p {
+            color: #cbd5e1;
+            line-height: 1.7;
+        }
+
+        /* Уведомления */
+        .notification {
+            position: fixed;
+            top: 90px;
+            right: 20px;
+            background: var(--gradient-primary);
+            color: white;
+            padding: 16px 22px;
+            border-radius: 10px;
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+            max-width: 350px;
+            animation: fadeInUp 0.5s ease;
+            font-weight: 600;
+            border-left: 5px solid white;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .notification i {
+            font-size: 1.4rem;
+        }
+
+        /* Адаптивность */
+        @media (max-width: 992px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: rgba(30, 41, 59, 0.98);
+                backdrop-filter: blur(15px);
+                padding: 15px;
+                flex-direction: column;
+                gap: 12px;
+                box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+                border-top: 2px solid var(--primary-color);
+                animation: fadeInUp 0.3s ease;
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .hero-title {
+                font-size: 2.8rem;
+            }
+            
+            .section {
+                padding: 35px 20px;
+            }
+            
+            .settings-panel {
+                width: 90%;
+                max-width: 300px;
+                height: auto;
+                max-height: 80vh;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                padding: 60px 4% 100px;
+                clip-path: polygon(0 0, 100% 0, 100% 92%, 50% 100%, 0 92%);
+            }
+            
+            .hero-title {
+                font-size: 2.2rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.3rem;
+            }
+            
+            .server-info {
+                flex-direction: column;
+                gap: 12px;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .currency-box {
+                padding: 20px;
+            }
+            
+            .price-display {
+                flex-direction: column;
+                gap: 20px;
+                padding: 20px;
+            }
+            
+            .arrow {
+                transform: rotate(90deg);
+                padding: 12px 0;
+            }
+            
+            .modal-content {
+                padding: 25px;
+            }
+            
+            .modal-title {
+                font-size: 2.2rem;
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                gap: 12px;
+            }
+        }
+    </style>
+</head>
+<body class="font-medium">
+    <!-- Фиксированная шапка -->
+    <nav class="top-nav" id="topNav">
+        <a href="#" class="nav-logo">
+            <div class="logo-container">
+                <div class="server-photo">
+                    <div class="server-photo-img">
+                        <i img src="C:\Users\User\Downloads\6014592525840091977.jpg" alt="F"></i>
+                    </div>
+                </div>
+                <div class="logo-text">
+                    <span class="logo-main">Exelrice</span>
+                    <span class="logo-sub">Гриф сервер Minecraft</span>
+                </div>
+            </div>
+        </a>
+        
+        <div class="nav-links" id="navLinks">
+            <a href="#home" class="nav-link"><i class="fas fa-home"></i> Главная</a>
+            <a href="#why-us" class="nav-link"><i class="fas fa-star"></i> Почему мы?</a>
+            <a href="#donat" class="nav-link"><i class="fas fa-crown"></i> Донат</a>
+            <a href="#currency" class="nav-link"><i class="fas fa-coins"></i> Валюта</a>
+            <a href="#" class="nav-link" id="openRules"><i class="fas fa-book"></i> Правила</a>
+            <a href="https://t.me/+gxL5dtVKy2Q5NDRk" target="_blank" class="nav-link"><i class="fab fa-telegram"></i> Поддержка</a>
+            <a href="#" class="nav-btn" id="playBtn"><i class="fas fa-play-circle"></i> Играть</a>
+        </div>
+        
+        <button class="mobile-menu-btn" id="mobileMenuBtn">
+            <i class="fas fa-bars"></i>
+        </button>
+    </nav>
+
+    <!-- Кнопка настроек -->
+    <div class="settings-btn" id="settingsBtn">
+        <i class="fas fa-sliders-h"></i>
+    </div>
+
+    <!-- Панель настроек 300x450 -->
+    <div class="settings-panel" id="settingsPanel">
+        <div class="settings-header">
+            <h2 class="settings-title"><i class="fas fa-cog"></i> Настройки</h2>
+            <button class="close-settings" id="closeSettings">×</button>
+        </div>
+        
+        <div class="settings-group">
+            <h3 class="group-title"><i class="fas fa-palette"></i> Цветовая тема</h3>
+            <div class="theme-options">
+                <div class="theme-option active" data-theme="dark">Темная</div>
+                <div class="theme-option" data-theme="light">Светлая</div>
+            </div>
+        </div>
+        
+        <div class="settings-group">
+            <h3 class="group-title"><i class="fas fa-fill-drip"></i> Цвет акцентов</h3>
+            <div class="color-options">
+                <div class="color-option red active" data-color="red">
+                    <div class="color-preview"></div>
+                    <span>Красный</span>
+                </div>
+                <div class="color-option crimson" data-color="crimson">
+                    <div class="color-preview"></div>
+                    <span>Бордовый</span>
+                </div>
+                <div class="color-option orange" data-color="orange">
+                    <div class="color-preview"></div>
+                    <span>Оранжевый</span>
+                </div>
+                <div class="color-option purple" data-color="purple">
+                    <div class="color-preview"></div>
+                    <span>Фиолетовый</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="settings-group">
+            <h3 class="group-title"><i class="fas fa-text-height"></i> Размер шрифта</h3>
+            <div class="font-options">
+                <div class="font-option font-small" data-size="small">Маленький</div>
+                <div class="font-option font-medium active" data-size="medium">Средний</div>
+                <div class="font-option font-large" data-size="large">Большой</div>
+            </div>
+        </div>
+        
+        <button class="reset-btn" id="resetSettings">
+            <i class="fas fa-redo"></i> Сбросить настройки
+        </button>
+    </div>
+
+    <!-- Модальное окно правил -->
+    <div class="modal" id="rulesModal">
+        <div class="modal-content">
+            <div class="close-modal" id="closeRulesModal">×</div>
+            <h2 class="modal-title">Правила сервера</h2>
+            
+            <div class="rules-section">
+                <h3><i class="fas fa-gavel"></i> Основные правила</h3>
+                <ul class="rules-list">
+                    <li><i class="fas fa-check-circle"></i> Уважайте других игроков и администрацию сервера</li>
+                    <li><i class="fas fa-check-circle"></i> Запрещено использование нецензурной лексики и оскорблений</li>
+                    <li><i class="fas fa-check-circle"></i> Запрещена реклама других серверов и ресурсов</li>
+                    <li><i class="fas fa-check-circle"></i> Запрещены любые формы мошенничества</li>
+                    <li><i class="fas fa-check-circle"></i> Соблюдайте правила конкретного игрового режима</li>
+                    <li><i class="fas fa-check-circle"></i> Запрещено распространение личной информации без согласия</li>
+                </ul>
+            </div>
+            
+            <div class="rules-section">
+                <h3><i class="fas fa-gamepad"></i> Игровой процесс</h3>
+                <ul class="rules-list">
+                    <li><i class="fas fa-check-circle"></i> Запрещено использование читов и сторонних программ</li>
+                    <li><i class="fas fa-check-circle"></i> Запрещено использование багов и эксплойтов</li>
+                    <li><i class="fas fa-check-circle"></i> Запрещено гриферство в защищенных зонах</li>
+                    <li><i class="fas fa-check-circle"></i> Запрещено создание ловушек на спавне и общественных зонах</li>
+                    <li><i class="fas fa-check-circle"></i> Разрешено гриферство только в режимах Анархия и Гриферство</li>
+                    <li><i class="fas fa-check-circle"></i> Запрещено использование макросов и автокликеров</li>
+                </ul>
+            </div>
+            
+            <div class="rules-section">
+                <h3><i class="fas fa-comments"></i> Чат и общение</h3>
+                <ul class="rules-list">
+                    <li><i class="fas fa-check-circle"></i> Запрещен флуд, спам и капс</li>
+                    <li><i class="fas fa-check-circle"></i> Запрещены дискуссии на политические и религиозные темы</li>
+                    <li><i class="fas fa-check-circle"></i> Запрещены провокации и разжигание конфликтов</li>
+                    <li><i class="fas fa-check-circle"></i> Разрешена только русская и английская речь в основном чате</li>
+                    <li><i class="fas fa-check-circle"></i> Для личных разговоров используйте приватные сообщения</li>
+                    <li><i class="fas fa-check-circle"></i> Запрещено использование ников, оскорбляющих других игроков</li>
+                </ul>
+            </div>
+            
+            <div class="rules-warning">
+                <h4><i class="fas fa-exclamation-triangle"></i> Важное предупреждение</h4>
+                <p>Нарушение правил влечет за собой наказание: предупреждение, временный бан, перманентный бан. Администрация оставляет за собой право наказывать игроков без объяснения причин. Все решения администрации являются окончательными и обсуждению не подлежат.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Герой-секция -->
+        <section id="home" class="hero">
+            <div class="hero-bg"></div>
+            <div class="hero-content">
+                <h1 class="hero-title animate-on-scroll">EXELRICE</h1>
+                <div class="hero-subtitle animate-on-scroll">ЛУЧШИЙ ГРИФ СЕРВЕР</div>
+                <p class="hero-description animate-on-scroll">
+                    Присоединяйтесь к нашему уникальному сообществу! Огромные миры, интересные ивенты, 
+                    справедливая экономика и миллионы друзей ждут вас. Станьте частью нашей истории!
+                </p>
+                <div class="server-info animate-on-scroll">
+                    <div class="version-badge">***</div>
+                    <div class="server-address">***</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Секция "Почему мы?" -->
+        <section id="why-us" class="section animate-on-scroll">
+            <h2 class="section-title">ПОЧЕМУ МЫ?</h2>
+            <p class="section-subtitle">Преимущества нашего сервера</p>
+            
+            <div class="why-us-grid">
+                <div class="why-us-card">
+                    <i class="fas fa-users why-us-icon"></i>
+                    <h3 class="why-us-title">Активное сообщество</h3>
+                    <p class="why-us-text"></p>
+                </div>
+                
+                <div class="why-us-card">
+                    <i class="fas fa-shield-alt why-us-icon"></i>
+                    <h3 class="why-us-title">Защита от гриферов</h3>
+                    <p class="why-us-text"></p>
+                </div>
+                
+                <div class="why-us-card">
+                    <i class="fas fa-sync-alt why-us-icon"></i>
+                    <h3 class="why-us-title">Регулярные обновления</h3>
+                    <p class="why-us-text"></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Секция доната -->
+        <section id="donat" class="section animate-on-scroll">
+            <h2 class="section-title">ДОНАТ ПРИВИЛЕГИИ</h2>
+            <p class="section-subtitle">Получите эксклюзивные возможности на сервере</p>
+            
+            <div class="donat-grid">
+                <div class="donat-card">
+                    <div class="discount-badge">-1%</div>
+                    <div class="donat-title">Кастом</div>
+                    <div class="price-old">399₽/220₴</div>
+                    <div class="price-new">399₽/220₴</div>
+                    <ul class="donat-features">
+                        <li><i class="fas fa-check"></i> Цветной ник в чате</li>
+                        <li><i class="fas fa-check"></i> Доступ к /fly</li>
+                        <li><i class="fas fa-check"></i> 3 приватных варпа</li>
+                        <li><i class="fas fa-check"></i> Увеличенные лимиты</li>
+                        <li><i class="fas fa-check"></i> Префикс [VIP]</li>
+                    </ul>
+                    <button class="donat-btn" data-privilege="vip">Купить</button>
+                </div>
+                
+                <div class="donat-card">
+                    <div class="discount-badge">-1%</div>
+                    <div class="donat-title">Excellently</div>
+                    <div class="price-old">299₽/165₴</div>
+                    <div class="price-new">299₽/165₴</div>
+                    <ul class="donat-features">
+                        <li><i class="fas fa-check"></i> Все возможности VIP</li>
+                        <li><i class="fas fa-check"></i> Доступ к креативу</li>
+                        <li><i class="fas fa-check"></i> 10 приватных варпов</li>
+                        <li><i class="fas fa-check"></i> Невидимость в табе</li>
+                        <li><i class="fas fa-check"></i> Префикс [PREMIUM]</li>
+                    </ul>
+                    <button class="donat-btn" data-privilege="premium">Купить</button>
+                </div>
+                
+                <div class="donat-card">
+                    <div class="discount-badge">-1%</div>
+                    <div class="donat-title">Dragon</div>
+                    <div class="price-old">199₽/110₴</div>
+                    <div class="price-new">199₽/110₴</div>
+                    <ul class="donat-features">
+                        <li><i class="fas fa-check"></i> Все возможности PREMIUM</li>
+                        <li><i class="fas fa-check"></i> Особые частицы</li>
+                        <li><i class="fas fa-check"></i> Хейт-спич в чате</li>
+                        <li><i class="fas fa-check"></i> Доступ к тестовым сборкам</li>
+                        <li><i class="fas fa-check"></i> Префикс [LEGEND]</li>
+                    </ul>
+                    <button class="donat-btn" data-privilege="legend">Купить</button>
+                </div>
+
+                <div class="donat-card">
+                    <div class="discount-badge">-1%</div>
+                    <div class="donat-title">Neyro</div>
+                    <div class="price-old">149₽/80₴</div>
+                    <div class="price-new">149₽/80₴</div>
+                    <ul class="donat-features">
+                        <li><i class="fas fa-check"></i> Все возможности PREMIUM</li>
+                        <li><i class="fas fa-check"></i> Особые частицы</li>
+                        <li><i class="fas fa-check"></i> Хейт-спич в чате</li>
+                        <li><i class="fas fa-check"></i> Доступ к тестовым сборкам</li>
+                        <li><i class="fas fa-check"></i> Префикс [LEGEND]</li>
+                    </ul>
+                    <button class="donat-btn" data-privilege="legend">Купить</button>
+                </div>
+
+                <div class="donat-card">
+                    <div class="discount-badge">-1%</div>
+                    <div class="donat-title">Rabbit</div>
+                    <div class="price-old">129₽/70₴</div>
+                    <div class="price-new">129₽/70₴</div>
+                    <ul class="donat-features">
+                        <li><i class="fas fa-check"></i> Все возможности PREMIUM</li>
+                        <li><i class="fas fa-check"></i> Особые частицы</li>
+                        <li><i class="fas fa-check"></i> Хейт-спич в чате</li>
+                        <li><i class="fas fa-check"></i> Доступ к тестовым сборкам</li>
+                        <li><i class="fas fa-check"></i> Префикс [LEGEND]</li>
+                    </ul>
+                    <button class="donat-btn" data-privilege="legend">Купить</button>
+                </div>
+
+             <div class="donat-card">
+                    <div class="discount-badge">-1%</div>
+                    <div class="donat-title">Thunder</div>
+                    <div class="price-old">99₽/55₴</div>
+                    <div class="price-new">99₽/55₴</div>
+                    <ul class="donat-features">
+                        <li><i class="fas fa-check"></i> Все возможности PREMIUM</li>
+                        <li><i class="fas fa-check"></i> Особые частицы</li>
+                        <li><i class="fas fa-check"></i> Хейт-спич в чате</li>
+                        <li><i class="fas fa-check"></i> Доступ к тестовым сборкам</li>
+                        <li><i class="fas fa-check"></i> Префикс [LEGEND]</li>
+                    </ul>
+                    <button class="donat-btn" data-privilege="legend">Купить</button>
+                </div>
+
+             <div class="donat-card">
+                    <div class="discount-badge">-1%</div>
+                    <div class="donat-title">Lighting</div>
+                    <div class="price-old">79₽/45₴</div>
+                    <div class="price-new">79₽/45₴</div>
+                    <ul class="donat-features">
+                        <li><i class="fas fa-check"></i> Все возможности PREMIUM</li>
+                        <li><i class="fas fa-check"></i> Особые частицы</li>
+                        <li><i class="fas fa-check"></i> Хейт-спич в чате</li>
+                        <li><i class="fas fa-check"></i> Доступ к тестовым сборкам</li>
+                        <li><i class="fas fa-check"></i> Префикс [LEGEND]</li>
+                    </ul>
+                    <button class="donat-btn" data-privilege="legend">Купить</button>
+                </div>
+
+                <div class="donat-card">
+                    <div class="discount-badge">-1%</div>
+                    <div class="donat-title">Lord</div>
+                    <div class="price-old">49₽/30₴</div>
+                    <div class="price-new">49₽/30₴</div>
+                    <ul class="donat-features">
+                        <li><i class="fas fa-check"></i> Все возможности PREMIUM</li>
+                        <li><i class="fas fa-check"></i> Особые частицы</li>
+                        <li><i class="fas fa-check"></i> Хейт-спич в чате</li>
+                        <li><i class="fas fa-check"></i> Доступ к тестовым сборкам</li>
+                        <li><i class="fas fa-check"></i> Префикс [LEGEND]</li>
+                    </ul>
+                    <button class="donat-btn" data-privilege="legend">Купить</button>
+                </div>
+
+                <div class="donat-card">
+                    <div class="discount-badge">-1%</div>
+                    <div class="donat-title">Boyar</div>
+                    <div class="price-old">24₽/15₴</div>
+                    <div class="price-new">24₽/15₴</div>
+                    <ul class="donat-features">
+                        <li><i class="fas fa-check"></i> Все возможности PREMIUM</li>
+                        <li><i class="fas fa-check"></i> Особые частицы</li>
+                        <li><i class="fas fa-check"></i> Хейт-спич в чате</li>
+                        <li><i class="fas fa-check"></i> Доступ к тестовым сборкам</li>
+                        <li><i class="fas fa-check"></i> Префикс [LEGEND]</li>
+                    </ul>
+                    <button class="donat-btn" data-privilege="legend">Купить</button>
+                </div>
+            </div>
+         </div>
+         </div>
+         </div>
+         </div>
+        </section>
+
+        <!-- Секция покупки валюты -->
+        <section id="currency" class="section animate-on-scroll">
+            <h2 class="section-title">ДОНАТ ВАЛЮТА</h2>
+            <p class="section-subtitle">Купите игровую валюту для покупки предметов и улучшений</p>
+            
+            <div class="currency-container">
+                <div class="currency-box">
+                    <div class="currency-amount" id="currencyAmount">1,000 ЭХО</div>
+                    
+                    <div class="slider-container">
+                        <div class="slider-header">
+                            <span class="slider-label">Количество зхо</span>
+                            <span class="slider-value" id="sliderValue">1,000</span>
+                        </div>
+                        <input type="range" min="100" max="10000" step="100" value="1000" class="slider" id="currencySlider">
+                        <div class="slider-steps">
+                            <span>10</span>
+                            <span>2,500</span>
+                            <span>5,000</span>
+                            <span>10,000</span>
+                        </div>
+                    </div>
+                    
+                    <div class="price-display">
+                        <div class="price-item">
+                            <div class="price-label">Отдаете</div>
+                            <div class="price-amount price-give" id="priceGive">100₽</div>
+                        </div>
+                        <div class="arrow">→</div>
+                        <div class="price-item">
+                            <div class="price-label">Получаете</div>
+                            <div class="price-amount price-get" id="priceGet">1,000 эхо</div>
+                        </div>
+                    </div>
+                    
+                    <button class="buy-btn" id="buyCurrency">
+                        <i class="fas fa-gem"></i> КУПИТЬ ЗХО
+                    </button>
+                    <p class="agreement">
+                        Совершая оплату, вы соглашаетесь со всеми условиями пользовательского соглашения
+                    </p>
+                </div>
+                
+                <div class="currency-box">
+                    <h3 style="font-size: 1.6rem; margin-bottom: 20px; color: var(--text-dark); text-align: center;">Зачем нужны рубины?</h3>
+                    <ul style="list-style-type: none; padding-left: 0;">
+                        <li style="padding: 15px 0; border-bottom: 2px solid #4b5563; display: flex; align-items: center;">
+                            <span style="background: var(--gradient-primary); color: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 12px; font-weight: 900; font-size: 1.2rem;">1</span>
+                            <div>
+                                <h4 style="font-size: 1.2rem; margin-bottom: 3px;">Покупка предметов</h4>
+                                <p style="color: #cbd5e1; font-size: 0.9rem;">Уникальное оружие, броня и инструменты</p>
+                            </div>
+                        </li>
+                        <li style="padding: 15px 0; border-bottom: 2px solid #4b5563; display: flex; align-items: center;">
+                            <span style="background: var(--gradient-primary); color: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 12px; font-weight: 900; font-size: 1.2rem;">2</span>
+                            <div>
+                                <h4 style="font-size: 1.2rem; margin-bottom: 3px;">Улучшения</h4>
+                                <p style="color: #cbd5e1; font-size: 0.9rem;">Улучшения для вашего дома и территории</p>
+                            </div>
+                        </li>
+                        <li style="padding: 15px 0; display: flex; align-items: center;">
+                            <span style="background: var(--gradient-primary); color: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 12px; font-weight: 900; font-size: 1.2rem;">3</span>
+                            <div>
+                                <h4 style="font-size: 1.2rem; margin-bottom: 3px;">Аукцион</h4>
+                                <p style="color: #cbd5e1; font-size: 0.9rem;">Участие в аукционах редких предметов</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Футер -->
+    <footer class="footer">
+        <div class="footer-links">
+            <a href="#home" class="footer-link"><i class="fas fa-home"></i> Главная</a>
+            <a href="#why-us" class="footer-link"><i class="fas fa-star"></i> Почему мы?</a>
+            <a href="#donat" class="footer-link"><i class="fas fa-crown"></i> Донат</a>
+            <a href="#currency" class="footer-link"><i class="fas fa-coins"></i> Валюта</a>
+            <a href="#" class="footer-link" id="openRulesFooter"><i class="fas fa-book"></i> Правила</a>
+            <a href="https://t.me/+gxL5dtVKy2Q5NDRk" target="_blank" class="footer-link telegram-link"><i class="fab fa-telegram"></i> Поддержка</a>
+        </div>
+        <p class="copyright">
+            © 2023 Exelrice. Все права защищены.<br>
+            Minecraft является товарным знаком Mojang AB.
+        </p>
+    </footer>
+
+    <script>
+        // ========== ИНИЦИАЛИЗАЦИЯ ПЕРЕМЕННЫХ ==========
+        const settingsBtn = document.getElementById('settingsBtn');
+        const settingsPanel = document.getElementById('settingsPanel');
+        const closeSettingsBtn = document.getElementById('closeSettings');
+        const resetSettingsBtn = document.getElementById('resetSettings');
+        const topNav = document.getElementById('topNav');
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navLinks = document.getElementById('navLinks');
+        const rulesModal = document.getElementById('rulesModal');
+        const openRulesBtn = document.getElementById('openRules');
+        const openRulesFooterBtn = document.getElementById('openRulesFooter');
+        const closeRulesModalBtn = document.getElementById('closeRulesModal');
+        const currencySlider = document.getElementById('currencySlider');
+        const sliderValue = document.getElementById('sliderValue');
+        const currencyAmount = document.getElementById('currencyAmount');
+        const priceGive = document.getElementById('priceGive');
+        const priceGet = document.getElementById('priceGet');
+        const buyCurrencyBtn = document.getElementById('buyCurrency');
+        const playBtn = document.getElementById('playBtn');
+        
+        // ========== АНИМАЦИИ ПРИ СКРОЛЛЕ ==========
+        const animateElements = document.querySelectorAll('.animate-on-scroll');
+        
+        function checkScroll() {
+            animateElements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                
+                if (elementTop < windowHeight - 80) {
+                    element.classList.add('animated');
+                }
+            });
+        }
+        
+        window.addEventListener('scroll', checkScroll);
+        window.addEventListener('load', checkScroll);
+        
+        // ========== ИЗМЕНЕНИЕ ШАПКИ ПРИ СКРОЛЛЕ ==========
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 40) {
+                topNav.classList.add('scrolled');
+            } else {
+                topNav.classList.remove('scrolled');
+            }
+        });
+        
+        // ========== МОБИЛЬНОЕ МЕНЮ ==========
+        mobileMenuBtn.addEventListener('click', function() {
+            navLinks.classList.toggle('active');
+            this.innerHTML = navLinks.classList.contains('active') ? 
+                '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+        });
+        
+        // Закрытие мобильного меню при клике на ссылку
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function() {
+                if (window.innerWidth <= 992) {
+                    navLinks.classList.remove('active');
+                    mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                }
+            });
+        });
+        
+        // ========== ПАНЕЛЬ НАСТРОЕК ==========
+        settingsBtn.addEventListener('click', function() {
+            settingsPanel.classList.toggle('active');
+        });
+        
+        closeSettingsBtn.addEventListener('click', function() {
+            settingsPanel.classList.remove('active');
+        });
+        
+        document.addEventListener('click', function(event) {
+            if (!settingsPanel.contains(event.target) && !settingsBtn.contains(event.target)) {
+                settingsPanel.classList.remove('active');
+            }
+        });
+        
+        // ========== МОДАЛЬНОЕ ОКНО ПРАВИЛ ==========
+        openRulesBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            rulesModal.classList.add('active');
+            settingsPanel.classList.remove('active');
+            if (window.innerWidth <= 992) {
+                navLinks.classList.remove('active');
+                mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+            }
+        });
+        
+        openRulesFooterBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            rulesModal.classList.add('active');
+        });
+        
+        closeRulesModalBtn.addEventListener('click', function() {
+            rulesModal.classList.remove('active');
+        });
+        
+        rulesModal.addEventListener('click', function(e) {
+            if (e.target === rulesModal) {
+                rulesModal.classList.remove('active');
+            }
+        });
+        
+        // ========== СИСТЕМА НАСТРОЕК ==========
+        const themeOptions = document.querySelectorAll('.theme-option');
+        const colorOptions = document.querySelectorAll('.color-option');
+        const fontSizeOptions = document.querySelectorAll('.font-option');
+        
+        // Загрузка настроек из localStorage
+        function loadSettings() {
+            const theme = localStorage.getItem('siteTheme') || 'dark';
+            const color = localStorage.getItem('accentColor') || 'red';
+            const fontSize = localStorage.getItem('fontSize') || 'medium';
+            
+            // Применение темы
+            document.body.className = '';
+            document.body.classList.add(`font-${fontSize}`);
+            if (theme === 'light') {
+                document.body.style.backgroundColor = '#f8fafc';
+                document.body.style.color = '#1a1a1a';
+            } else {
+                document.body.style.backgroundColor = '';
+                document.body.style.color = '';
+            }
+            
+            // Обновление активных кнопок
+            themeOptions.forEach(option => {
+                option.classList.remove('active');
+                if (option.getAttribute('data-theme') === theme) {
+                    option.classList.add('active');
+                }
+            });
+            
+            colorOptions.forEach(option => {
+                option.classList.remove('active');
+                if (option.getAttribute('data-color') === color) {
+                    option.classList.add('active');
+                }
+            });
+            
+            fontSizeOptions.forEach(option => {
+                option.classList.remove('active');
+                if (option.getAttribute('data-size') === fontSize) {
+                    option.classList.add('active');
+                }
+            });
+            
+            // Применение цвета акцентов
+            applyAccentColor(color);
+        }
+        
+        // Применение цвета акцентов
+        function applyAccentColor(color) {
+            const root = document.documentElement;
+            
+            switch(color) {
+                case 'red':
+                    root.style.setProperty('--primary-color', '#dc2626');
+                    root.style.setProperty('--secondary-color', '#b91c1c');
+                    break;
+                case 'crimson':
+                    root.style.setProperty('--primary-color', '#991b1b');
+                    root.style.setProperty('--secondary-color', '#7f1d1d');
+                    break;
+                case 'orange':
+                    root.style.setProperty('--primary-color', '#f97316');
+                    root.style.setProperty('--secondary-color', '#ea580c');
+                    break;
+                case 'purple':
+                    root.style.setProperty('--primary-color', '#8b5cf6');
+                    root.style.setProperty('--secondary-color', '#7c3aed');
+                    break;
+            }
+        }
+        
+        // Обработчики для выбора темы
+        themeOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                const theme = this.getAttribute('data-theme');
+                
+                themeOptions.forEach(opt => opt.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Применение темы
+                if (theme === 'light') {
+                    document.body.style.backgroundColor = '#f8fafc';
+                    document.body.style.color = '#1a1a1a';
+                } else {
+                    document.body.style.backgroundColor = '';
+                    document.body.style.color = '';
+                }
+                
+                localStorage.setItem('siteTheme', theme);
+            });
+        });
+        
+        // Обработчики для выбора цвета
+        colorOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                const color = this.getAttribute('data-color');
+                
+                colorOptions.forEach(opt => opt.classList.remove('active'));
+                this.classList.add('active');
+                
+                applyAccentColor(color);
+                localStorage.setItem('accentColor', color);
+            });
+        });
+        
+        // Обработчики для выбора размера шрифта
+        fontSizeOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                const size = this.getAttribute('data-size');
+                
+                fontSizeOptions.forEach(opt => opt.classList.remove('active'));
+                this.classList.add('active');
+                
+                document.body.className = '';
+                document.body.classList.add(`font-${size}`);
+                localStorage.setItem('fontSize', size);
+            });
+        });
+        
+        // Сброс настроек
+        resetSettingsBtn.addEventListener('click', function() {
+            localStorage.clear();
+            loadSettings();
+            showNotification('Настройки сброшены!');
+        });
+        
+        // ========== ЛОГИКА ПОЛЗУНКА ДЛЯ ВАЛЮТЫ ==========
+        function formatNumber(num) {
+            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+        }
+        
+        function calculatePrice(amount) {
+            // Базовая цена: 299 ₽ за 1000 рубинов
+            const baseAmount = 1000;
+            const basePrice = 100;
+            
+            // Оптовая скидка
+            // let price = Math.round((amount / baseAmount) * basePrice * 0.9);
+            
+            // Минимальная цена
+            if (price < 10) price = 10;
+            
+            return price;
+        }
+        
+        currencySlider.addEventListener('input', function() {
+            const amount = parseInt(this.value);
+            const price = calculatePrice(amount);
+            
+            sliderValue.textContent = formatNumber(amount);
+            currencyAmount.textContent = formatNumber(amount) + ' ЭХО';
+            priceGive.textContent = formatNumber(price) + ' ₽';
+            priceGet.textContent = formatNumber(amount) + ' ЭХО';
+        });
+        
+        // Инициализация начальных значений
+        const initialAmount = parseInt(currencySlider.value);
+        const initialPrice = calculatePrice(initialAmount);
+        sliderValue.textContent = formatNumber(initialAmount);
+        currencyAmount.textContent = formatNumber(initialAmount) + ' ЭХО';
+        priceGive.textContent = formatNumber(initialPrice) + ' ₽';
+        priceGet.textContent = formatNumber(initialAmount) + ' ЭХО';
+        
+        // ========== ОБРАБОТЧИКИ КНОПОК ==========
+        buyCurrencyBtn.addEventListener('click', function() {
+            const amount = parseInt(currencySlider.value);
+            const price = calculatePrice(amount);
+            showNotification(`Вы выбрали покупку ${formatNumber(amount)} эхо за ${formatNumber(price)} ₽`);
+        });
+        
+        playBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            showNotification('Подключитесь к серверу: ***');
+        });
+        
+        document.querySelectorAll('.donat-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const privilege = this.getAttribute('data-privilege') || 'привилегии';
+                const price = this.parentElement.querySelector('.price-new')?.textContent || 'неизвестной суммы';
+                const title = this.parentElement.querySelector('.donat-title')?.textContent || 'этой привилегии';
+                
+                showNotification(`Вы выбрали покупку "${title}" за ${price}`);
+            });
+        });
+        
+        // ========== ПЛАВНАЯ ПРОКРУТКА ==========
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                if (this.getAttribute('href') === '#') return;
+                
+                const targetId = this.getAttribute('href');
+                if (targetId.startsWith('#')) {
+                    e.preventDefault();
+                    const targetElement = document.querySelector(targetId);
+                    
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+            });
+        });
+        
+        // ========== УВЕДОМЛЕНИЯ ==========
+        function showNotification(message) {
+            // Удаляем предыдущие уведомления
+            document.querySelectorAll('.notification').forEach(el => el.remove());
+            
+            // Создаем элемент уведомления
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.innerHTML = `
+                <i class="fas fa-check-circle"></i>
+                <div>${message}</div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Удаляем уведомление через 5 секунд
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                notification.style.transform = 'translateY(-10px)';
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 500);
+            }, 5000);
+        }
+        
+        // ========== ЗАГРУЗКА НАСТРОЕК ПРИ ЗАГРУЗКЕ СТРАНИЦЫ ==========
+        window.addEventListener('DOMContentLoaded', loadSettings);
+        
+        // ========== ИНИЦИАЛИЗАЦИЯ ПРИ ЗАГРУЗКЕ ==========
+        window.addEventListener('load', function() {
+            // Запускаем проверку анимаций при скролле
+            checkScroll();
+            
+            // Добавляем небольшую задержку для плавного появления
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+    </script>
+</body>
+</html>
